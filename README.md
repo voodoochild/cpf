@@ -2,6 +2,8 @@
 
 ## Assumptions
 
+- Bill summary is hard-coded, but would come from an API
+- Copy is hard-coded, but could use an i18n micro-service
 - User isn't able to go back and change payment details
 - Rounded line-height values when moving from pixels to relative
 - Validating fields on blur, but could be on change, or submit instead
