@@ -1,29 +1,51 @@
-# Create T3 App
+# Payment Flow
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Assumptions
 
-## What's next? How do I make an app with this?
+- User isn't able to go back and change payment details
+- Rounded line-height values when moving from pixels to relative
+- Validating fields on blur, but could be on change, or submit instead
+- No designs for other button states
+- Design tokens are in `globals.css`, but should be imported from the design system
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## TODO
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- [ ] Create `<Input>` and `<Button>` components
+- [ ] Build the page layout form
+- [ ] Mock i18n helper function
+- [ ] Add state management to handle the flow
+- [ ] Add field validation
+- [ ] Fix up the styling to match designs
+- [ ] Add unit test coverage with react-testing-library
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Evaluation Criteria
 
-## Learn More
+Your assignment will be evaluated by both an engineer and a designer on the following criteria:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- Adherence to provided requirements
+- Code structure, readability, and maintainability
+- UI design fidelity & attention to detail
+- Error handling and validation
+- Test coverage and quality
+- Accessibility (ie. semantic HTML elements, ARIA attributes, keyboard navigability)
+- Thought process and rationale behind design decisions
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Notes
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+"Hi, Taylor" -- Arial; size 28px; line-height 36px; weight 700; color #13126C;
+"You have..." -- Arial; size 16px; line-height 24px; spacing 0.2px; weight 400; color #171731;
+"Total due" -- arial 700 size 16px height 24px spacing 0.2 color #65657B;
+Button text -- arial 700 16px 24px height 0.2 spacing color white weight 700
+"Payment information" -- arial 700 20px 24px height 0.2 spacing color #171731;
 
-## How do I deploy this?
+form label -- arial 700 14px/20px 0.2 spacing color #65657B;
+field border -- border: 1px solid #6D7088 8px radius
+field padding 12px, 16px
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+error message -- 400 14/20
+
+"You're about to make..." 400 20/24
+"Payment method" 14/20 700
+"Card ending in" 14/20
+
+"Thank you..." 28/36

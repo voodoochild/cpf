@@ -1,0 +1,14 @@
+.btn {
+  appearance: none;
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  letter-spacing: var(--letter-spacing-sm);
+  line-height: var(--line-height-xl);
+  padding: 12px 40px;
+  border-radius: var(--border-radius-md);
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
