@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Dispatch } from "react";
+import React, { useState, Dispatch } from "react";
 import { getUser } from "~/api/users";
 import { getBill } from "~/api/billing";
 import { Button } from "~/components/Button";
@@ -28,9 +28,9 @@ function BillSummary({ loadNextStep, user, bill }: FlowStepProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Hi, {user.firstName}</h1>
-      <p>You have {bill.number} medical bills ready from ABC Health System. You can pay your bills here, or verify your identity to view full bill details.</p>
+    <form className={styles.billSummary} method="post" onSubmit={handleSubmit}>
+      <h1 className={styles.greeting}>Hi, {user.firstName}</h1>
+      <p className={styles.summary}>You have {bill.number} medical bills ready from ABC Health System. You can pay your bills here, or verify your identity to view full bill details.</p>
       <dl className={styles.totalDue}>
         <dt>Total due</dt>
         <dd>{bill.total}</dd>
@@ -41,6 +41,7 @@ function BillSummary({ loadNextStep, user, bill }: FlowStepProps) {
 }
 
 function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps) {
+  // REFACTOR: move state up to the top-level component
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [name, setName] = useState("");
@@ -68,56 +69,90 @@ function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps)
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    loadNextStep();
+
+    // REFACTOR: add list of validators to the field definition
+    // Run a validation pass on all fields
+    const formData = { cardNumber, expiry, cvv, name, zipCode };
+    const _formErrors: { [k: string]: string[] } = {};
+    Object.entries(formData).map(([key, value]) => {
+      const errors = [isRequired].map(
+        (fn) => fn(value)
+      ).filter(
+        (v) => v !== null
+      );
+
+      if (errors.length) {
+        _formErrors[key] = errors;
+      }
+    });
+
+    if (Object.keys(_formErrors).length) {
+      setFormErrors(_formErrors);
+    } else {
+      loadNextStep();
+    }
   };
 
-  // TODO: form layout, "disable" submit button, handle submit
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Payment information</h1>
-      <TextField
-        errors={formErrors?.cardNumber}
-        handleBlur={() => doValidation("cardNumber", cardNumber, [isRequired])}
-        handleChange={setCardNumber}
-        label="Card number"
-        name="cardNumber"
-        value={cardNumber}
-      />
-      <div>
-        <TextField
-          errors={formErrors?.expiry}
-          handleBlur={() => doValidation("expiry", expiry, [isRequired])}
-          handleChange={setExpiry}
-          label="Expires (MM/YY)"
-          name="expiry"
-          value={expiry}
-        />
-        <TextField
-          errors={formErrors?.cvv}
-          handleBlur={() => doValidation("cvv", cvv, [isRequired])}
-          handleChange={setCvv}
-          label="Security code (CVV)"
-          name="cvv"
-          value={cvv}
-        />
+    <form className={styles.form} method="post" onSubmit={handleSubmit}>
+      <div className={styles.formHeader}>
+        <span>1</span>
+        <h1>Payment information</h1>
       </div>
-      <TextField
-        errors={formErrors?.name}
-        handleBlur={() => doValidation("name", name, [isRequired])}
-        handleChange={setName}
-        label="Name on card"
-        name="name"
-        value={name}
-      />
-      <TextField
-        errors={formErrors?.zipCode}
-        handleBlur={() => doValidation("zipCode", zipCode, [isRequired])}
-        handleChange={setZipCode}
-        label="ZIP code"
-        name="zipCode"
-        value={zipCode}
-      />
-      <Button type="submit">Continue</Button>
+      <div className={styles.formFields}>
+        <TextField
+          errors={formErrors?.cardNumber}
+          handleBlur={() => doValidation("cardNumber", cardNumber, [isRequired])}
+          handleChange={setCardNumber}
+          label="Card number"
+          maxLength={16}
+          name="cardNumber"
+          value={cardNumber}
+        />
+        <div className={styles.sideBySide}>
+          <TextField
+            errors={formErrors?.expiry}
+            handleBlur={() => doValidation("expiry", expiry, [isRequired])}
+            handleChange={setExpiry}
+            label="Expires (MM/YY)"
+            maxLength={5}
+            name="expiry"
+            value={expiry}
+          />
+          <TextField
+            errors={formErrors?.cvv}
+            handleBlur={() => doValidation("cvv", cvv, [isRequired])}
+            handleChange={setCvv}
+            label="Security code (CVV)"
+            maxLength={3}
+            name="cvv"
+            value={cvv}
+          />
+        </div>
+        <TextField
+          errors={formErrors?.name}
+          handleBlur={() => doValidation("name", name, [isRequired])}
+          handleChange={setName}
+          label="Name on card"
+          name="name"
+          value={name}
+        />
+        <TextField
+          errors={formErrors?.zipCode}
+          handleBlur={() => doValidation("zipCode", zipCode, [isRequired])}
+          handleChange={setZipCode}
+          label="ZIP code"
+          maxLength={5}
+          name="zipCode"
+          value={zipCode}
+        />
+        <Button
+          appearDisabled={Object.keys(formErrors).length > 0}
+          type="submit"
+        >
+          Continue
+        </Button>
+      </div>
     </form>
   );
 }
@@ -129,7 +164,7 @@ function Review({ bill, cardNumber, loadNextStep }: FlowStepProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form method="post" onSubmit={handleSubmit}>
       <h1>Review and pay</h1>
       <p>You're about to make a payment of {bill.total}</p>
       <dl>

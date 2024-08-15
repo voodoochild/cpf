@@ -1,11 +1,11 @@
 :root {
   --color-bg: #f2f8ff;
-  --color-text: #171731;
+  --color-text-body: #171731;
   --color-text-highlight: #13126c;
   --color-text-label: #65657b;
   --color-error: #c34648;
   --color-header-bg: white;
-  --color-header-border: #e7e9ef;
+  --color-section-border: #e7e9ef;
   --color-form-bg: white;
   --color-button-bg: #4967e1;
   --color-button-text: white;
@@ -29,6 +29,7 @@
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
 }
 
 /*
@@ -45,6 +46,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  color: var(--color-text-body);
   font-family: var(--font-family-sans);
 }
 
@@ -60,5 +62,5 @@ a {
 .pageHeader {
   background-color: var(--color-header-bg);
   padding: 0 16px;
-  border-bottom: 1px solid var(--color-header-border);
+  border-bottom: 1px solid var(--color-section-border);
 }

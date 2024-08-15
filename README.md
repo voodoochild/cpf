@@ -12,12 +12,11 @@
 
 ## TODO
 
-- [ ] Create `<Input>` and `<Button>` components
-- [ ] Build the page layout form
-- [ ] Mock i18n helper function
-- [ ] Add state management to handle the flow
-- [ ] Add field validation
-- [ ] Fix up the styling to match designs
+- [x] Create `<Input>` and `<Button>` components
+- [x] Build the page layout form
+- [x] Add state management to handle the flow
+- [x] Add field validation
+- [x] Fix up the styling to match designs
 - [ ] Add unit test coverage with react-testing-library
 
 ## Evaluation Criteria

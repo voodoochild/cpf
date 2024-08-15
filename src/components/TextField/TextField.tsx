@@ -1,21 +1,15 @@
+import React from "react";
 import clsx from "clsx";
 
 import styles from "./TextField.module.css";
 
-/**
- * Much of this would be made generic in a full design system implementation,
- * with types that extend the standard attributes for each type of form
- * element, while omitting attributes that we want to control.
- *
- * 	e.g. Enforce use of handleChange prop instead of using onChange directly
- */
-
-export type TextFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
+interface TextFieldProps extends React.ComponentPropsWithoutRef<"input"> {
 	label: string;
+	name: string;
 	errors?: string[];
 	handleBlur?: () => void;
 	handleChange?: (value: string) => void;
-};
+}
 
 export function TextField({
 	errors,
@@ -23,7 +17,8 @@ export function TextField({
 	handleChange,
 	label,
 	name,
-	value
+	value,
+	...rest
 }: TextFieldProps) {
 	const onBlur = (e: React.SyntheticEvent<HTMLInputElement>) => {
 		handleBlur?.();
@@ -33,14 +28,18 @@ export function TextField({
 		handleChange?.(e.target.value);
 	};
 
-	// TODO: change error rendering
 	return (
-		<div className={clsx(
-			errors?.length && styles.error,
-		)}>
+		<div className={
+			clsx(
+				styles.textField,
+				Boolean(value) && !errors?.length && styles.valid,
+				errors?.length && styles.error
+			)
+		}>
 			<label>
-				<span>{label}</span>
+				<span className={styles.label}>{label}</span>
 				<input
+					{...rest}
 					name={name}
 					onBlur={onBlur}
 					onChange={onChange}
@@ -48,7 +47,7 @@ export function TextField({
 					value={value}
 				/>
 			</label>
-			<span className={styles.errorMsg}>{errors?.join("\n")}</span>
+			{errors?.map((err) => (<div className={styles.errorMsg}>{err}</div>))}
 		</div>
 	);
 }
