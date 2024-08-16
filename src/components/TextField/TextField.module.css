@@ -18,7 +18,7 @@
 .textField.valid label::after {
   content: "";
   position: absolute;
-  bottom: 13px;
+  top: 43px; /* TODO: rework the DOM to need for 'magic number' */
   right: 17px;
   height: 24px;
   width: 24px;
@@ -28,7 +28,7 @@
 .textField.error label::after {
   content: "";
   position: absolute;
-  bottom: 13px;
+  top: 43px;
   right: 17px;
   height: 24px;
   width: 24px;
@@ -54,8 +54,6 @@
   letter-spacing: var(--letter-spacing-sm);
   position: relative;
 }
-
-/* 8px gap between 24x24 icon and text */
 
 .textField.error input {
   border-color: var(--color-error);

@@ -7,16 +7,23 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
 	appearDisabled?: boolean;
 }
 
-export function Button(props: ButtonProps) {
+export function Button({
+	appearDisabled,
+	children,
+	className,
+	...rest
+}: ButtonProps) {
 	return (
 		<button
+			{...rest}
 			className={clsx(
+				className,
 				styles.btn,
-				props.appearDisabled && styles.disabled
+				appearDisabled && styles.disabled
 			)}
 			type="submit"
 		>
-			{props.children}
+			{children}
 		</button>
 	);
 }

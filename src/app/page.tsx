@@ -163,13 +163,22 @@ function Review({ bill, cardNumber, loadNextStep }: FlowStepProps) {
     loadNextStep();
   };
 
+  // TODO: this will break if cardNumber is too short,
+  // but that would be caught by proper form validation
+  const lastFour = cardNumber.substring(cardNumber.length - 4);
+
   return (
-    <form method="post" onSubmit={handleSubmit}>
-      <h1>Review and pay</h1>
-      <p>You're about to make a payment of {bill.total}</p>
-      <dl>
+    <form className={styles.form} method="post" onSubmit={handleSubmit}>
+      <div className={styles.formHeader}>
+        <span>2</span>
+        <h1>Review and pay</h1>
+      </div>
+      <p className={styles.paymentDetails}>You're about to make a payment of <b>{bill.total}</b></p>
+      <dl className={styles.paymentMethod}>
         <dt>Payment method</dt>
-        <dd>Card ending in {cardNumber}</dd>
+        <dd>
+          <img src="/visa.svg" /> Card ending in ••••{lastFour}
+        </dd>
       </dl>
       <Button type="submit">Pay {bill.total}</Button>
     </form>
@@ -179,7 +188,7 @@ function Review({ bill, cardNumber, loadNextStep }: FlowStepProps) {
 function Completed() {
   return (
     <div>
-      <h1>Thank you for your payment!</h1>
+      <h1 className={styles.thankYou}>Thank you for your payment!</h1>
     </div>
   );
 };

@@ -63,6 +63,7 @@
   font-size: var(--font-size-2xl);
   font-weight: bold;
   line-height: var(--line-height-md);
+  margin-left: 0;
 }
 
 /* Payment information */
@@ -121,7 +122,45 @@
 
 /* Review and pay */
 
+.paymentDetails {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-sm);
+  letter-spacing: var(--letter-spacing-sm);
+}
+
+.paymentMethod {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 30px 0 36px 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-lg);
+  letter-spacing: var(--letter-spacing-sm);
+}
+
+.paymentMethod dt {
+  font-weight: bold;
+  color: var(--color-text-label);
+}
+
+.paymentMethod dd {
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 /* Completed */
+
+.thankYou {
+  color: var(--color-text-highlight);
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  line-height: var(--line-height-md);
+  text-align: center;
+  margin-top: 96px;
+}
 
 @media (min-width: 786px) {
   .container {
