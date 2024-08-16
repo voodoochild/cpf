@@ -28,12 +28,19 @@ export function TextField({
 		handleChange?.(e.target.value);
 	};
 
+	const hasErrors = errors && errors.length > 0;
+
+	if (hasErrors) {
+		rest["aria-invalid"] = true;
+		rest["aria-errormessage"] = `${name}-errors`;
+	}
+
 	return (
 		<div className={
 			clsx(
 				styles.textField,
-				Boolean(value) && !errors?.length && styles.valid,
-				errors?.length && styles.error
+				Boolean(value) && !hasErrors && styles.valid,
+				hasErrors && styles.error
 			)
 		}>
 			<label>
@@ -47,7 +54,20 @@ export function TextField({
 					value={value}
 				/>
 			</label>
-			{errors?.map((err) => (<div className={styles.errorMsg}>{err}</div>))}
+			{hasErrors ? (
+				<div id={`${name}-errors`}>
+					{
+						errors.map((err, index) => (
+							<div
+								className={styles.errorMsg}
+								key={`${name}-error[${index}]`}
+							>
+								{err}
+							</div>
+						))
+					}
+				</div>
+			) : null}
 		</div>
 	);
 }

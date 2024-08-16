@@ -29,7 +29,7 @@ function BillSummary({ loadNextStep, user, bill }: FlowStepProps) {
 
   return (
     <form className={styles.billSummary} method="post" onSubmit={handleSubmit}>
-      <h1 className={styles.greeting}>Hi, {user.firstName}</h1>
+      <h1 className={styles.greeting} role="presentation">Hi, {user.firstName}</h1>
       <p className={styles.summary}>You have {bill.number} medical bills ready from ABC Health System. You can pay your bills here, or verify your identity to view full bill details.</p>
       <dl className={styles.totalDue}>
         <dt>Total due</dt>
@@ -96,11 +96,12 @@ function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps)
   return (
     <form className={styles.form} method="post" onSubmit={handleSubmit}>
       <div className={styles.formHeader}>
-        <span>1</span>
+        <span role="presentation">1</span>
         <h1>Payment information</h1>
       </div>
       <div className={styles.formFields}>
         <TextField
+          data-testid="pf-cardnumber"
           errors={formErrors?.cardNumber}
           handleBlur={() => doValidation("cardNumber", cardNumber, [isRequired])}
           handleChange={setCardNumber}
@@ -111,6 +112,7 @@ function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps)
         />
         <div className={styles.sideBySide}>
           <TextField
+            data-testid="pf-expiry"
             errors={formErrors?.expiry}
             handleBlur={() => doValidation("expiry", expiry, [isRequired])}
             handleChange={setExpiry}
@@ -120,6 +122,7 @@ function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps)
             value={expiry}
           />
           <TextField
+            data-testid="pf-cvv"
             errors={formErrors?.cvv}
             handleBlur={() => doValidation("cvv", cvv, [isRequired])}
             handleChange={setCvv}
@@ -130,6 +133,7 @@ function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps)
           />
         </div>
         <TextField
+          data-testid="pf-name"
           errors={formErrors?.name}
           handleBlur={() => doValidation("name", name, [isRequired])}
           handleChange={setName}
@@ -138,6 +142,7 @@ function PaymentInfo({ cardNumber, setCardNumber, loadNextStep }: FlowStepProps)
           value={name}
         />
         <TextField
+          data-testid="pf-zipcode"
           errors={formErrors?.zipCode}
           handleBlur={() => doValidation("zipCode", zipCode, [isRequired])}
           handleChange={setZipCode}
@@ -170,14 +175,14 @@ function Review({ bill, cardNumber, loadNextStep }: FlowStepProps) {
   return (
     <form className={styles.form} method="post" onSubmit={handleSubmit}>
       <div className={styles.formHeader}>
-        <span>2</span>
+        <span role="presentation">2</span>
         <h1>Review and pay</h1>
       </div>
       <p className={styles.paymentDetails}>You're about to make a payment of <b>{bill.total}</b></p>
       <dl className={styles.paymentMethod}>
         <dt>Payment method</dt>
         <dd>
-          <img src="/visa.svg" /> Card ending in ••••{lastFour}
+          <img aria-hidden="true" src="/visa.svg" /> Card ending in ••••{lastFour}
         </dd>
       </dl>
       <Button type="submit">Pay {bill.total}</Button>
@@ -188,7 +193,7 @@ function Review({ bill, cardNumber, loadNextStep }: FlowStepProps) {
 function Completed() {
   return (
     <div>
-      <h1 className={styles.thankYou}>Thank you for your payment!</h1>
+      <h1 className={styles.thankYou} role="presentation">Thank you for your payment!</h1>
     </div>
   );
 };
