@@ -1,5 +1,10 @@
 # Payment Flow
 
+- Install [pnpm](https://pnpm.io/installation)
+- `pnpm install`
+- `pnpm dev` and then view at `http://localhost:3000/`
+- `pnpm run test`
+
 ## Assumptions
 
 - Bill summary is hard-coded, but would come from an API
